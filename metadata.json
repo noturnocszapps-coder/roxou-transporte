@@ -1,0 +1,5 @@
+{
+  "name": "roxou-transporte",
+  "description": "Connection platform for event transportation in Presidente Prudente. Peer-to-peer communication layer.",
+  "requestFramePermissions": ["geolocation"]
+}
