@@ -9,10 +9,12 @@ import {
   ChevronRight, 
   Car, 
   User, 
-  FileText 
+  FileText,
+  Loader2
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { LegalDisclaimer } from '../LegalDisclaimer';
+import { submitDriverOnboarding } from '@/actions/profile';
 
 interface OnboardingFormProps {
   initialStatus: 'pending' | 'approved' | 'rejected' | null;
@@ -22,6 +24,34 @@ interface OnboardingFormProps {
 export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, userEmail }) => {
   const [step, setStep] = useState(1);
   const [status, setStatus] = useState(initialStatus);
+  const [loading, setLoading] = useState(false);
+  
+  // Form state
+  const [formData, setFormData] = useState({
+    full_name: '',
+    phone: '',
+    vehicle_model: '',
+    vehicle_plate: '',
+    driverdash_id: ''
+  });
+
+  const handleFinish = async () => {
+    setLoading(true);
+    try {
+      await submitDriverOnboarding({
+        ...formData,
+        documents: {
+          cnh_url: 'https://picsum.photos/seed/cnh/800/600', // Mock for now
+          crlv_url: 'https://picsum.photos/seed/crlv/800/600' // Mock for now
+        }
+      });
+      setStatus('pending');
+    } catch (error: any) {
+      alert(error.message || 'Erro ao enviar cadastro');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (status === 'pending') {
     return (
@@ -92,6 +122,8 @@ export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, u
                 <input 
                   type="text" 
                   placeholder="Como no seu documento"
+                  value={formData.full_name}
+                  onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
                 />
               </div>
@@ -100,6 +132,8 @@ export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, u
                 <input 
                   type="tel" 
                   placeholder="(18) 99999-9999"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
                 />
               </div>
@@ -115,6 +149,8 @@ export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, u
                 <input 
                   type="text" 
                   placeholder="Ex: Toyota Corolla 2022 Prata"
+                  value={formData.vehicle_model}
+                  onChange={(e) => setFormData({ ...formData, vehicle_model: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
                 />
               </div>
@@ -124,6 +160,8 @@ export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, u
                   <input 
                     type="text" 
                     placeholder="ABC1D23"
+                    value={formData.vehicle_plate}
+                    onChange={(e) => setFormData({ ...formData, vehicle_plate: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all uppercase"
                   />
                 </div>
@@ -132,6 +170,8 @@ export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, u
                   <input 
                     type="text" 
                     placeholder="Seu ID externo"
+                    value={formData.driverdash_id}
+                    onChange={(e) => setFormData({ ...formData, driverdash_id: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
                   />
                 </div>
@@ -176,10 +216,17 @@ export const OnboardingForm: React.FC<OnboardingFormProps> = ({ initialStatus, u
 
             <button 
               type="button"
-              onClick={() => step < 3 ? setStep(step + 1) : setStatus('pending')}
-              className="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
+              onClick={() => step < 3 ? setStep(step + 1) : handleFinish()}
+              disabled={loading}
+              className="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 disabled:opacity-50"
             >
-              {step === 3 ? "Finalizar Cadastro" : "Próximo Passo"} <ChevronRight className="w-4 h-4" />
+              {loading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  {step === 3 ? "Finalizar Cadastro" : "Próximo Passo"} <ChevronRight className="w-4 h-4" />
+                </>
+              )}
             </button>
           </div>
         </form>

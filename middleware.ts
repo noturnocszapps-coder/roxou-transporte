@@ -66,15 +66,16 @@ export async function middleware(request: NextRequest) {
       }
 
       // 4. DRIVER VERIFICATION GUARD
-      const { data: driver } = await supabase
-        .from('drivers')
-        .select('status')
+      // We already have the profile from the previous query
+      const { data: driverProfile } = await supabase
+        .from('profiles')
+        .select('driver_status')
         .eq('id', user.id)
         .single();
 
       // Block operational areas if not approved
       const isDriverOperational = path.startsWith('/driver/availability') || path.startsWith('/driver/leads');
-      if (isDriverOperational && driver?.status !== DRIVER_STATUS.APPROVED) {
+      if (isDriverOperational && driverProfile?.driver_status !== DRIVER_STATUS.APPROVED) {
         url.pathname = '/driver/onboarding'; // Redirect to onboarding/status page
         return NextResponse.redirect(url);
       }

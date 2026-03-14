@@ -1,4 +1,4 @@
-import { getDriversByStatus } from '@/actions/admin';
+import { getDriversByStatus, getAdminStats } from '@/actions/admin';
 import { DRIVER_STATUS } from '@/constants';
 import Link from 'next/link';
 import { 
@@ -17,13 +17,12 @@ export default async function AdminDashboard({
 }) {
   const params = await searchParams;
   const currentStatus = params.status || DRIVER_STATUS.PENDING;
-  const drivers = await getDriversByStatus(currentStatus);
-
-  const stats = {
-    pending: (await getDriversByStatus(DRIVER_STATUS.PENDING)).length,
-    approved: (await getDriversByStatus(DRIVER_STATUS.APPROVED)).length,
-    rejected: (await getDriversByStatus(DRIVER_STATUS.REJECTED)).length,
-  };
+  
+  // Fetch data in parallel
+  const [drivers, stats] = await Promise.all([
+    getDriversByStatus(currentStatus),
+    getAdminStats()
+  ]);
 
   return (
     <main className="min-h-screen bg-neutral-50 py-12 px-6">

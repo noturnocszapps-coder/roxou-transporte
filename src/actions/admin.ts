@@ -35,13 +35,42 @@ export async function getDriversByStatus(status: string) {
 
   const { data, error } = await supabase
     .from('profiles')
-    .select('*')
+    .select('id, full_name, email, driver_status, created_at, updated_at')
     .eq('role', ROLES.DRIVER)
     .eq('driver_status', status)
     .order('updated_at', { ascending: false });
 
   if (error) throw error;
   return data;
+}
+
+/**
+ * GET ADMIN STATS
+ * Fetches counts for all driver statuses in a single call.
+ */
+export async function getAdminStats() {
+  const { supabase } = await verifyAdmin();
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('driver_status')
+    .eq('role', ROLES.DRIVER);
+
+  if (error) throw error;
+
+  const stats = {
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  };
+
+  data.forEach((profile: any) => {
+    if (profile.driver_status === DRIVER_STATUS.PENDING) stats.pending++;
+    else if (profile.driver_status === DRIVER_STATUS.APPROVED) stats.approved++;
+    else if (profile.driver_status === DRIVER_STATUS.REJECTED) stats.rejected++;
+  });
+
+  return stats;
 }
 
 /**
