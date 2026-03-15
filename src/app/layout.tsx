@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: '--font-inter',
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: '--font-montserrat',
+  weight: ['400', '700', '900'],
+});
 
 export const metadata: Metadata = {
   title: "Roxou Transporte",
@@ -16,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={inter.className}>
+    <html lang="pt-BR" className={`${inter.variable} ${montserrat.variable}`}>
+      <body className="font-sans antialiased">
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

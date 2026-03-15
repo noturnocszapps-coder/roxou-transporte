@@ -50,7 +50,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
           table: 'messages',
           filter: `connection_id=eq.${connectionId}`,
         },
-        (payload) => {
+        (payload: any) => {
           const newMessage = payload.new as Message;
           setMessages((prev) => {
             // Avoid duplicates
@@ -89,28 +89,28 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-[600px] bg-white rounded-[32px] border border-neutral-100 shadow-sm overflow-hidden">
+    <div className="flex flex-col h-[650px] glass rounded-[40px] overflow-hidden relative">
       {/* Header */}
-      <header className="px-6 py-4 border-b border-neutral-100 bg-white flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-neutral-50 rounded-2xl flex items-center justify-center text-neutral-400">
-            {otherPartyRole === 'driver' ? <Car className="w-5 h-5" /> : <User className="w-5 h-5" />}
+      <header className="px-8 py-6 border-b border-white/5 bg-white/5 backdrop-blur-md flex items-center justify-between relative z-10">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-neutral-800 rounded-2xl flex items-center justify-center text-neutral-400 border border-white/5">
+            {otherPartyRole === 'driver' ? <Car className="w-6 h-6" /> : <User className="w-6 h-6" />}
           </div>
           <div>
-            <h3 className="font-bold text-neutral-900">{otherPartyName}</h3>
-            <p className="text-[10px] text-neutral-400 uppercase tracking-widest font-bold">
-              {otherPartyRole === 'driver' ? 'Motorista Conectado' : 'Passageiro'}
+            <h3 className="font-black text-white uppercase tracking-tight">{otherPartyName}</h3>
+            <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-black">
+              {otherPartyRole === 'driver' ? 'Motorista Verificado' : 'Passageiro'}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-bold uppercase tracking-widest">
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-            Chat Seguro
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-roxou/10 text-roxou-light rounded-full text-[10px] font-black uppercase tracking-widest border border-roxou/20">
+            <span className="w-1.5 h-1.5 bg-roxou rounded-full animate-pulse" />
+            Criptografia Ativa
           </div>
           <button 
             onClick={() => setIsReportModalOpen(true)}
-            className="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
+            className="p-3 text-neutral-500 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all border border-transparent hover:border-rose-500/20"
             title="Denunciar usuário"
           >
             <ShieldAlert className="w-5 h-5" />
@@ -128,17 +128,17 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
       </header>
 
       {/* Legal Banner */}
-      <div className="px-6 py-2 bg-amber-50 border-b border-amber-100 flex items-center gap-2">
-        <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
-        <p className="text-[10px] text-amber-700 font-medium">
-          A Roxou não participa da negociação. Combine valores e segurança diretamente aqui.
+      <div className="px-8 py-2.5 bg-amber-500/10 border-b border-amber-500/10 flex items-center gap-3 relative z-10">
+        <ShieldAlert className="w-4 h-4 text-amber-500" />
+        <p className="text-[10px] text-amber-200/70 font-bold uppercase tracking-tight">
+          A Roxou não participa da negociação. Combine valores aqui.
         </p>
       </div>
 
       {/* Message List */}
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 space-y-4 bg-neutral-50/30"
+        className="flex-1 overflow-y-auto p-8 space-y-6 bg-neutral-950/50 relative z-0"
       >
         <AnimatePresence initial={false}>
           {messages.map((msg) => {
@@ -150,13 +150,13 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm shadow-sm ${
+                <div className={`max-w-[85%] px-5 py-4 rounded-3xl text-sm shadow-2xl ${
                   isMe 
-                  ? 'bg-indigo-600 text-white rounded-tr-none' 
-                  : 'bg-white text-neutral-800 border border-neutral-100 rounded-tl-none'
+                  ? 'bg-roxou text-white rounded-tr-none shadow-roxou/10' 
+                  : 'bg-neutral-900 text-neutral-200 border border-white/5 rounded-tl-none shadow-black/20'
                 }`}>
-                  <p className="leading-relaxed">{msg.content}</p>
-                  <p className={`text-[9px] mt-1 opacity-50 ${isMe ? 'text-right' : 'text-left'}`}>
+                  <p className="leading-relaxed font-medium">{msg.content}</p>
+                  <p className={`text-[9px] mt-2 font-black uppercase tracking-widest opacity-40 ${isMe ? 'text-right' : 'text-left'}`}>
                     {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -167,21 +167,21 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({
       </div>
 
       {/* Composer */}
-      <footer className="p-4 bg-white border-t border-neutral-100">
-        <form onSubmit={handleSend} className="flex items-center gap-2">
+      <footer className="p-6 bg-neutral-900/50 backdrop-blur-xl border-t border-white/5 relative z-10">
+        <form onSubmit={handleSend} className="flex items-center gap-3">
           <input 
             type="text" 
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Escreva sua mensagem..."
-            className="flex-1 px-4 py-3 rounded-2xl border border-neutral-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm"
+            className="flex-1 px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-neutral-600 focus:ring-2 focus:ring-roxou/20 focus:border-roxou outline-none transition-all text-sm font-medium"
           />
           <button 
             type="submit"
             disabled={!newMessage.trim() || isSending}
-            className="w-12 h-12 bg-neutral-900 text-white rounded-2xl flex items-center justify-center hover:bg-indigo-600 transition-all disabled:opacity-50 shadow-lg shadow-neutral-100"
+            className="w-14 h-14 bg-white text-black rounded-2xl flex items-center justify-center hover:bg-roxou hover:text-white transition-all disabled:opacity-50 shadow-xl shadow-white/5 active:scale-95"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-6 h-6" />
           </button>
         </form>
       </footer>

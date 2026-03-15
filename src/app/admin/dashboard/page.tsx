@@ -25,25 +25,28 @@ export default async function AdminDashboard({
   ]);
 
   return (
-    <main className="min-h-screen bg-neutral-50 py-12 px-6">
-      <div className="max-w-6xl mx-auto">
-        <header className="mb-12">
-          <div className="flex items-center gap-2 text-indigo-600 mb-2">
+    <main className="min-h-screen bg-neutral-950 py-12 px-6 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full bg-roxou/5 blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <header className="mb-16">
+          <div className="flex items-center gap-2 text-roxou mb-3">
             <ShieldCheck className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-widest">Painel de Controle</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Painel de Controle</span>
           </div>
-          <h1 className="text-4xl font-bold text-neutral-900">Aprovações de Motoristas</h1>
+          <h1 className="text-5xl font-black tracking-tighter uppercase mb-8">Gestão de <br /><span className="text-roxou">Motoristas</span></h1>
           
-          <nav className="flex items-center gap-6 mt-8 border-b border-neutral-200">
+          <nav className="flex items-center gap-8 border-b border-white/10">
             <Link 
               href="/admin/dashboard" 
-              className="pb-4 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 transition-all"
+              className="pb-4 text-[10px] font-black uppercase tracking-widest text-roxou border-b-2 border-roxou transition-all"
             >
               Aprovações
             </Link>
             <Link 
               href="/admin/reports" 
-              className="pb-4 text-sm font-bold text-neutral-400 hover:text-neutral-900 transition-all"
+              className="pb-4 text-[10px] font-black uppercase tracking-widest text-neutral-500 hover:text-white transition-all"
             >
               Denúncias
             </Link>
@@ -51,70 +54,70 @@ export default async function AdminDashboard({
         </header>
 
         {/* Stats Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           <Link 
             href="?status=pending"
-            className={`p-6 rounded-[32px] border transition-all ${
+            className={`p-8 rounded-[32px] transition-all ${
               currentStatus === DRIVER_STATUS.PENDING 
-                ? 'bg-white border-indigo-200 shadow-lg shadow-indigo-50 ring-2 ring-indigo-500/10' 
-                : 'bg-white border-neutral-100 hover:border-neutral-200'
+                ? 'glass border-roxou/50 shadow-2xl shadow-roxou/10' 
+                : 'glass border-white/5 hover:border-white/20'
             }`}
           >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600">
-                <Clock className="w-6 h-6" />
+            <div className="flex items-center gap-6">
+              <div className="w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 border border-amber-500/20">
+                <Clock className="w-7 h-7" />
               </div>
               <div>
-                <p className="text-sm font-bold text-neutral-500 uppercase tracking-wider">Pendentes</p>
-                <p className="text-3xl font-bold text-neutral-900">{stats.pending}</p>
+                <p className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-1">Pendentes</p>
+                <p className="text-4xl font-black text-white">{stats.pending}</p>
               </div>
             </div>
           </Link>
 
           <Link 
             href="?status=approved"
-            className={`p-6 rounded-[32px] border transition-all ${
+            className={`p-8 rounded-[32px] transition-all ${
               currentStatus === DRIVER_STATUS.APPROVED 
-                ? 'bg-white border-emerald-200 shadow-lg shadow-emerald-50 ring-2 ring-emerald-500/10' 
-                : 'bg-white border-neutral-100 hover:border-neutral-200'
+                ? 'glass border-roxou/50 shadow-2xl shadow-roxou/10' 
+                : 'glass border-white/5 hover:border-white/20'
             }`}
           >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
-                <CheckCircle className="w-6 h-6" />
+            <div className="flex items-center gap-6">
+              <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                <CheckCircle className="w-7 h-7" />
               </div>
               <div>
-                <p className="text-sm font-bold text-neutral-500 uppercase tracking-wider">Aprovados</p>
-                <p className="text-3xl font-bold text-neutral-900">{stats.approved}</p>
+                <p className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-1">Aprovados</p>
+                <p className="text-4xl font-black text-white">{stats.approved}</p>
               </div>
             </div>
           </Link>
 
           <Link 
             href="?status=rejected"
-            className={`p-6 rounded-[32px] border transition-all ${
+            className={`p-8 rounded-[32px] transition-all ${
               currentStatus === DRIVER_STATUS.REJECTED 
-                ? 'bg-white border-rose-200 shadow-lg shadow-rose-50 ring-2 ring-rose-500/10' 
-                : 'bg-white border-neutral-100 hover:border-neutral-200'
+                ? 'glass border-roxou/50 shadow-2xl shadow-roxou/10' 
+                : 'glass border-white/5 hover:border-white/20'
             }`}
           >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600">
-                <XCircle className="w-6 h-6" />
+            <div className="flex items-center gap-6">
+              <div className="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-500 border border-rose-500/20">
+                <XCircle className="w-7 h-7" />
               </div>
               <div>
-                <p className="text-sm font-bold text-neutral-500 uppercase tracking-wider">Rejeitados</p>
-                <p className="text-3xl font-bold text-neutral-900">{stats.rejected}</p>
+                <p className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-1">Rejeitados</p>
+                <p className="text-4xl font-black text-white">{stats.rejected}</p>
               </div>
             </div>
           </Link>
         </div>
 
         {/* Drivers List */}
-        <div className="bg-white rounded-[40px] border border-neutral-100 shadow-sm overflow-hidden">
-          <div className="p-8 border-b border-neutral-50 flex justify-between items-center">
-            <h2 className="text-xl font-bold text-neutral-900 flex items-center gap-2">
-              <Users className="w-5 h-5 text-indigo-600" />
+        <div className="glass rounded-[40px] overflow-hidden">
+          <div className="p-10 border-b border-white/5">
+            <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-3">
+              <Users className="w-6 h-6 text-roxou" />
               {currentStatus === DRIVER_STATUS.PENDING ? 'Aguardando Revisão' : 
                currentStatus === DRIVER_STATUS.APPROVED ? 'Motoristas Ativos' : 'Aplicações Recusadas'}
             </h2>
@@ -123,33 +126,33 @@ export default async function AdminDashboard({
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-neutral-50/50">
-                  <th className="px-8 py-4 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Motorista</th>
-                  <th className="px-8 py-4 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Email</th>
-                  <th className="px-8 py-4 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Data da Solicitação</th>
-                  <th className="px-8 py-4 text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Ações</th>
+                <tr className="bg-white/5">
+                  <th className="px-10 py-5 text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em]">Motorista</th>
+                  <th className="px-10 py-5 text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em]">Email</th>
+                  <th className="px-10 py-5 text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em]">Solicitação</th>
+                  <th className="px-10 py-5 text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] text-right">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-neutral-50">
+              <tbody className="divide-y divide-white/5">
                 {drivers.length > 0 ? (
                   drivers.map((driver) => (
-                    <tr key={driver.id} className="hover:bg-neutral-50/50 transition-colors group">
-                      <td className="px-8 py-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center text-sm font-bold text-neutral-500">
+                    <tr key={driver.id} className="hover:bg-white/5 transition-colors group">
+                      <td className="px-10 py-8">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-neutral-800 rounded-2xl flex items-center justify-center text-sm font-black text-neutral-400 group-hover:bg-roxou group-hover:text-white transition-all">
                             {driver.full_name?.charAt(0)}
                           </div>
-                          <span className="font-bold text-neutral-900">{driver.full_name}</span>
+                          <span className="font-black text-white uppercase tracking-tight">{driver.full_name}</span>
                         </div>
                       </td>
-                      <td className="px-8 py-6 text-sm text-neutral-500">{driver.email}</td>
-                      <td className="px-8 py-6 text-sm text-neutral-500">
+                      <td className="px-10 py-8 text-sm text-neutral-400 font-medium">{driver.email}</td>
+                      <td className="px-10 py-8 text-sm text-neutral-400 font-medium">
                         {new Date(driver.updated_at || driver.created_at).toLocaleDateString('pt-BR')}
                       </td>
-                      <td className="px-8 py-6 text-right">
+                      <td className="px-10 py-8 text-right">
                         <Link 
                           href={`/admin/drivers/${driver.id}`}
-                          className="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 hover:text-indigo-700 transition-colors"
+                          className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-roxou hover:text-white transition-colors"
                         >
                           Revisar <ChevronRight className="w-4 h-4" />
                         </Link>
@@ -158,8 +161,8 @@ export default async function AdminDashboard({
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={4} className="px-8 py-20 text-center">
-                      <p className="text-neutral-400 font-medium">Nenhum motorista encontrado nesta categoria.</p>
+                    <td colSpan={4} className="px-10 py-32 text-center">
+                      <p className="text-neutral-500 font-black uppercase tracking-widest text-xs">Nenhum motorista encontrado</p>
                     </td>
                   </tr>
                 )}

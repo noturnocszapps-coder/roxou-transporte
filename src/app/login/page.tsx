@@ -29,54 +29,57 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-6 overflow-hidden relative">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-roxou/20 blur-[120px] rounded-full pointer-events-none" />
+
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full bg-white rounded-[40px] p-12 shadow-xl shadow-neutral-200/50 border border-neutral-100"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-md w-full glass rounded-[40px] p-10 md:p-12 relative z-10"
       >
-        <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-200">
+        <div className="text-center mb-12">
+          <div className="w-16 h-16 bg-roxou rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-roxou/20">
             <ShieldCheck className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2">Bem-vindo ao Roxou</h1>
-          <p className="text-neutral-500">Sua conexão segura para transporte em eventos.</p>
+          <h1 className="text-3xl font-black tracking-tighter uppercase mb-2">Roxou<span className="text-roxou">.</span></h1>
+          <p className="text-neutral-400 text-sm font-medium">Sua conexão premium para eventos.</p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 bg-white border border-neutral-200 text-neutral-700 py-4 rounded-2xl font-bold hover:bg-neutral-50 transition-all disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-3 bg-white text-black py-4 rounded-2xl font-black uppercase tracking-tight hover:bg-neutral-200 transition-all disabled:opacity-50 active:scale-[0.98]"
           >
             <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
             {loading ? 'Carregando...' : 'Entrar com Google'}
           </button>
 
-          <div className="relative py-4">
+          <div className="relative py-2">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral-100"></div>
+              <div className="w-full border-t border-white/10"></div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-4 text-neutral-400 font-bold tracking-widest">Acesso Rápido</span>
+            <div className="relative flex justify-center text-[10px] uppercase font-black tracking-[0.2em]">
+              <span className="bg-neutral-950/50 backdrop-blur-sm px-4 text-neutral-500">Acesso Seguro</span>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-neutral-50 rounded-2xl text-center">
-              <User className="w-6 h-6 text-neutral-400 mx-auto mb-2" />
-              <p className="text-xs font-bold text-neutral-600">Passageiros</p>
+            <div className="p-4 glass rounded-2xl text-center group hover:bg-white/10 transition-colors">
+              <User className="w-6 h-6 text-neutral-500 mx-auto mb-2 group-hover:text-roxou transition-colors" />
+              <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Passageiros</p>
             </div>
-            <div className="p-4 bg-neutral-50 rounded-2xl text-center">
-              <Car className="w-6 h-6 text-neutral-400 mx-auto mb-2" />
-              <p className="text-xs font-bold text-neutral-600">Motoristas</p>
+            <div className="p-4 glass rounded-2xl text-center group hover:bg-white/10 transition-colors">
+              <Car className="w-6 h-6 text-neutral-500 mx-auto mb-2 group-hover:text-roxou transition-colors" />
+              <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Motoristas</p>
             </div>
           </div>
         </div>
 
-        <p className="mt-10 text-center text-xs text-neutral-400 leading-relaxed">
+        <p className="mt-12 text-center text-[10px] text-neutral-500 leading-relaxed uppercase tracking-widest font-bold">
           Ao entrar, você concorda com nossos <br />
-          <span className="text-neutral-900 font-bold">Termos de Uso</span> e <span className="text-neutral-900 font-bold">Privacidade</span>.
+          <span className="text-white">Termos de Uso</span> e <span className="text-white">Privacidade</span>.
         </p>
       </motion.div>
     </div>

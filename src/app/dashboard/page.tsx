@@ -35,20 +35,23 @@ export default async function PassengerDashboard() {
     .order('created_at', { ascending: false });
 
   return (
-    <main className="min-h-screen bg-neutral-50 py-12 px-6">
-      <div className="max-w-4xl mx-auto">
-        <header className="flex justify-between items-end mb-12">
+    <main className="min-h-screen bg-neutral-950 py-12 px-6 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-roxou/10 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
           <div>
-            <div className="flex items-center gap-2 text-indigo-600 mb-2">
+            <div className="flex items-center gap-2 text-roxou mb-3">
               <LayoutDashboard className="w-5 h-5" />
-              <span className="text-xs font-bold uppercase tracking-widest">Dashboard</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Dashboard</span>
             </div>
-            <h1 className="text-4xl font-bold text-neutral-900">Minhas Viagens</h1>
+            <h1 className="text-5xl font-black tracking-tighter uppercase">Minhas <br /><span className="text-roxou">Viagens</span></h1>
           </div>
           
           <Link 
             href="/request/new" 
-            className="flex items-center gap-2 bg-neutral-900 text-white px-6 py-3 rounded-2xl font-bold hover:bg-indigo-600 transition-all shadow-lg shadow-neutral-200"
+            className="group flex items-center gap-2 bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-tight hover:bg-roxou hover:text-white transition-all shadow-xl shadow-white/5 active:scale-95"
           >
             <PlusCircle className="w-5 h-5" />
             Nova Solicitação
@@ -56,23 +59,23 @@ export default async function PassengerDashboard() {
         </header>
 
         {requests && requests.length > 0 ? (
-          <div className="space-y-2">
+          <div className="space-y-4">
             {requests.map((req) => (
               <PassengerRequestCard key={req.id} request={req as any} />
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-[40px] p-12 text-center border border-neutral-100 shadow-sm">
-            <div className="w-20 h-20 bg-neutral-50 rounded-[32px] flex items-center justify-center mx-auto mb-6">
-              <PlusCircle className="w-10 h-10 text-neutral-300" />
+          <div className="glass rounded-[40px] p-16 text-center">
+            <div className="w-24 h-24 bg-white/5 rounded-[32px] flex items-center justify-center mx-auto mb-8 border border-white/10">
+              <PlusCircle className="w-12 h-12 text-neutral-700" />
             </div>
-            <h2 className="text-2xl font-bold text-neutral-900 mb-2">Nenhuma viagem criada</h2>
-            <p className="text-neutral-500 mb-8 max-w-xs mx-auto">
-              Você ainda não criou nenhuma solicitação de transporte para eventos.
+            <h2 className="text-3xl font-black tracking-tighter uppercase mb-4">Nenhuma viagem <br />encontrada</h2>
+            <p className="text-neutral-500 mb-10 max-w-xs mx-auto text-sm font-medium leading-relaxed">
+              Você ainda não criou nenhuma solicitação de transporte para seus eventos.
             </p>
             <Link 
               href="/request/new"
-              className="inline-flex bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all"
+              className="inline-flex bg-roxou text-white px-10 py-5 rounded-2xl font-black uppercase tracking-tight hover:bg-roxou-dark transition-all shadow-xl shadow-roxou/20"
             >
               Começar Agora
             </Link>

@@ -46,50 +46,53 @@ export default async function DriverDashboard() {
     .limit(10);
 
   return (
-    <main className="min-h-screen bg-neutral-50 py-12 px-6">
-      <div className="max-w-6xl mx-auto">
-        <header className="mb-12">
-          <div className="flex items-center gap-2 text-indigo-600 mb-2">
+    <main className="min-h-screen bg-neutral-950 py-12 px-6 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="fixed bottom-0 left-0 w-[600px] h-[600px] bg-roxou/10 blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <header className="mb-16">
+          <div className="flex items-center gap-2 text-roxou mb-3">
             <Car className="w-5 h-5" />
-            <span className="text-xs font-bold uppercase tracking-widest">Painel do Motorista</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Painel do Motorista</span>
           </div>
-          <h1 className="text-4xl font-bold text-neutral-900">Central de Operações</h1>
+          <h1 className="text-5xl font-black tracking-tighter uppercase">Central de <br /><span className="text-roxou">Operações</span></h1>
         </header>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-10">
           {/* Active Chats Section */}
           <div className="lg:col-span-1">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-neutral-900 flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-indigo-600" />
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-lg font-black uppercase tracking-tight flex items-center gap-2">
+                <MessageSquare className="w-5 h-5 text-roxou" />
                 Minhas Conversas
               </h2>
-              <span className="bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">
+              <span className="bg-roxou/20 text-roxou-light px-2.5 py-1 rounded-lg text-[10px] font-black">
                 {connections?.length || 0}
               </span>
             </div>
 
             {connections && connections.length > 0 ? (
-              <div className="space-y-1">
+              <div className="space-y-2">
                 {connections.map((conn) => (
                   <DriverConnectionCard key={conn.id} connection={conn as any} />
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center bg-white rounded-[32px] border border-neutral-100 shadow-sm">
-                <p className="text-xs text-neutral-400">Nenhuma conversa ativa no momento.</p>
+              <div className="p-10 text-center glass rounded-[32px]">
+                <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500">Nenhuma conversa ativa</p>
               </div>
             )}
           </div>
 
           {/* Leads Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-neutral-900 flex items-center gap-2">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-lg font-black uppercase tracking-tight flex items-center gap-2">
                 <Zap className="w-5 h-5 text-amber-500" />
-                Novas Oportunidades
+                Oportunidades
               </h2>
-              <div className="flex items-center gap-2 text-xs text-neutral-400 font-medium">
+              <div className="flex items-center gap-2 text-[10px] text-neutral-500 font-black uppercase tracking-widest">
                 <Search className="w-4 h-4" />
                 Filtrar Leads
               </div>
@@ -102,8 +105,8 @@ export default async function DriverDashboard() {
                 ))}
               </div>
             ) : (
-              <div className="p-12 text-center bg-white rounded-[40px] border border-neutral-100 shadow-sm">
-                <p className="text-neutral-500">Não há novos leads disponíveis no momento.</p>
+              <div className="p-20 text-center glass rounded-[40px]">
+                <p className="text-neutral-500 font-medium">Não há novos leads disponíveis no momento.</p>
               </div>
             )}
           </div>

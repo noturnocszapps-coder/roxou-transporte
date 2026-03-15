@@ -14,6 +14,19 @@ import { ROUTES, ROLES, DRIVER_STATUS } from './src/constants';
 
 export async function middleware(request: NextRequest) {
   const { supabase, user, response } = await updateSession(request);
+  
+  if (!supabase) {
+    // If Supabase is not configured, allow public access to home/login but warn
+    const url = request.nextUrl.clone();
+    const path = url.pathname;
+    const isPublicRoute = path === ROUTES.HOME || path === ROUTES.LOGIN || path.startsWith('/api/public');
+    if (!isPublicRoute) {
+      url.pathname = ROUTES.LOGIN;
+      return NextResponse.redirect(url);
+    }
+    return response;
+  }
+
   const url = request.nextUrl.clone();
   const path = url.pathname;
 
