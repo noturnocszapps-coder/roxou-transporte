@@ -50,11 +50,11 @@ export default async function ChatPage({ params }: ChatPageProps) {
   const otherPartyRole = isPassenger ? 'driver' : 'passenger';
 
   return (
-    <main className="min-h-screen bg-neutral-950 py-12 px-6 relative overflow-hidden">
+    <main className="min-h-screen bg-bg py-12 px-6 relative overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-roxou/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-roxou/10 blur-[120px] rounded-full" />
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-roxou/10 blur-[150px] rounded-full" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-roxou/5 blur-[150px] rounded-full" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
@@ -68,7 +68,7 @@ export default async function ChatPage({ params }: ChatPageProps) {
         />
         
         <div className="mt-12 text-center">
-          <p className="text-[10px] text-neutral-600 max-w-md mx-auto uppercase tracking-[0.2em] font-black leading-relaxed">
+          <p className="text-[9px] text-neutral-700 max-w-md mx-auto uppercase tracking-[0.3em] font-black leading-relaxed">
             Esta conversa está sendo gravada para fins de segurança e moderação. 
             Nunca compartilhe dados bancários ou senhas no chat.
           </p>

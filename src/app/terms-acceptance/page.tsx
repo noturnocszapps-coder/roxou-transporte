@@ -26,46 +26,65 @@ export default function TermsAcceptancePage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-bg flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Background Glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-roxou/10 blur-[150px] rounded-full" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-roxou/5 blur-[150px] rounded-full" />
+      </div>
+
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="max-w-2xl w-full bg-white rounded-[40px] p-12 shadow-xl shadow-neutral-200/50 border border-neutral-100"
+        className="max-w-2xl w-full glass-card p-12 relative z-10"
       >
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
-            <ShieldCheck className="w-6 h-6" />
+        <div className="flex items-center gap-6 mb-10">
+          <div className="w-16 h-16 bg-roxou/10 rounded-[24px] flex items-center justify-center text-roxou border border-roxou/20 shadow-[0_0_20px_rgba(124,58,237,0.15)]">
+            <ShieldCheck className="w-8 h-8" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-neutral-900">Termos e Condições</h1>
-            <p className="text-sm text-neutral-500">Para continuar, precisamos que você aceite nossos termos.</p>
+            <h1 className="text-3xl font-black text-white uppercase tracking-tight font-display">Termos e Condições</h1>
+            <p className="text-xs text-neutral-500 font-bold uppercase tracking-widest mt-1">Para continuar, precisamos que você aceite nossos termos.</p>
           </div>
         </div>
 
-        <div className="space-y-6 mb-10">
-          <div className="prose prose-sm text-neutral-600 max-h-60 overflow-y-auto p-6 bg-neutral-50 rounded-2xl border border-neutral-100">
-            <h3 className="text-neutral-900 font-bold mb-2">1. Natureza do Serviço</h3>
-            <p>O Roxou Transporte é uma plataforma de intermediação. Não somos uma empresa de transporte e não possuímos frota própria.</p>
-            
-            <h3 className="text-neutral-900 font-bold mb-2 mt-4">2. Responsabilidade</h3>
-            <p>Toda e qualquer negociação de valores, horários e locais é de responsabilidade exclusiva entre o passageiro e o motorista.</p>
-            
-            <h3 className="text-neutral-900 font-bold mb-2 mt-4">3. Segurança</h3>
-            <p>Recomendamos que passageiros verifiquem a identidade do motorista e as condições do veículo antes de iniciar qualquer viagem.</p>
+        <div className="space-y-8 mb-12">
+          <div className="text-neutral-400 text-xs leading-relaxed max-h-64 overflow-y-auto p-8 bg-white/[0.02] rounded-[32px] border border-white/5 font-bold uppercase tracking-wider scrollbar-thin scrollbar-thumb-white/10">
+            <div className="space-y-6">
+              <section>
+                <h3 className="text-white font-black mb-3 text-[10px] tracking-[0.2em]">01. NATUREZA DO SERVIÇO</h3>
+                <p className="opacity-60">O Roxou Transporte é uma plataforma de intermediação. Não somos uma empresa de transporte e não possuímos frota própria.</p>
+              </section>
+              
+              <section>
+                <h3 className="text-white font-black mb-3 text-[10px] tracking-[0.2em]">02. RESPONSABILIDADE</h3>
+                <p className="opacity-60">Toda e qualquer negociação de valores, horários e locais é de responsabilidade exclusiva entre o passageiro e o motorista.</p>
+              </section>
+              
+              <section>
+                <h3 className="text-white font-black mb-3 text-[10px] tracking-[0.2em]">03. SEGURANÇA</h3>
+                <p className="opacity-60">Recomendamos que passageiros verifiquem a identidade do motorista e as condições do veículo antes de iniciar qualquer viagem.</p>
+              </section>
+            </div>
           </div>
 
-          <LegalDisclaimer />
+          <div className="px-4">
+            <LegalDisclaimer variant="compact" />
+          </div>
         </div>
 
         <button
           onClick={handleAccept}
           disabled={loading}
-          className="w-full bg-neutral-900 text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-indigo-600 transition-all disabled:opacity-50"
+          className="w-full bg-white text-black py-6 rounded-[24px] font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-3 hover:bg-roxou hover:text-white transition-all disabled:opacity-50 shadow-2xl group active:scale-[0.98]"
         >
           {loading ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-6 h-6 animate-spin" />
           ) : (
-            <>Aceitar e Continuar <ArrowRight className="w-5 h-5" /></>
+            <>
+              Aceitar e Continuar 
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </>
           )}
         </button>
       </motion.div>
