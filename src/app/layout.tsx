@@ -15,8 +15,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Roxou Transporte",
-  description: "Conectando passageiros e motoristas para eventos",
+  title: "RotaLucro - Inteligência Logística",
+  description: "A plataforma definitiva para entregadores Shopee, Mercado Livre e Autônomos.",
 };
 
 export default function RootLayout({

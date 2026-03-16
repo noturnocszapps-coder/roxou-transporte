@@ -29,19 +29,49 @@ export interface TransportRequest {
   createdAt: string;
 }
 
-export interface ChatConnection {
+export interface EarningsRecord {
   id: string;
-  requestId: string;
-  passengerId: string;
-  driverId: string;
-  lastMessage?: string;
-  updatedAt: string;
+  user_id: string;
+  date: string;
+  platform: string;
+  revenue: number;
+  km: number;
+  hours_worked: number;
+  packages_count?: number;
+  routes_count?: number;
+  fuel_cost?: number;
+  extra_expense?: number;
+  notes?: string;
+  created_at: string;
 }
 
-export interface Message {
+export interface ExpenseRecord {
   id: string;
-  connectionId: string;
-  senderId: string;
-  content: string;
-  createdAt: string;
+  user_id: string;
+  date: string;
+  category: string;
+  amount: number;
+  description?: string;
+  created_at: string;
+}
+
+export interface FreightCalculation {
+  distance_km: number;
+  packages_count: number;
+  estimated_time: number;
+  fuel_cost: number;
+  toll: number;
+  additional_cost: number;
+  desired_profit: number;
+  cost_per_km: number;
+  cost_per_hour: number;
+}
+
+export interface FreightResult {
+  total_cost: number;
+  min_freight: number;
+  recommended_freight: number;
+  estimated_profit: number;
+  profit_per_km: number;
+  profit_per_hour: number;
 }

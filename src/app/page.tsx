@@ -1,140 +1,126 @@
 import Link from 'next/link';
 import { ROUTES } from '@/constants';
-import { ShieldCheck, Car, Users, ArrowRight } from 'lucide-react';
+import { TrendingUp, ShieldCheck, Smartphone, BarChart3, ChevronRight, Package, MapPin, Calculator } from 'lucide-react';
+import { createClient } from '@/lib/supabase-server';
+import { redirect } from 'next/navigation';
 
-export default function HomePage() {
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user) redirect(ROUTES.DASHBOARD);
+
   return (
-    <main className="min-h-screen bg-bg text-white overflow-hidden selection:bg-roxou/30">
-      {/* Background Glows */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-roxou/10 blur-[140px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-roxou/5 blur-[120px] rounded-full" />
-      </div>
+    <main className="min-h-screen bg-bg text-white selection:bg-primary/30 overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center">
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none">
+          <div className="absolute top-[10%] left-[10%] w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full animate-pulse" />
+          <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full animate-pulse delay-700" />
+        </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header/Logo */}
-        <header className="flex justify-between items-center py-10">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 animate-fade-in">
+            <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400">Inteligência Logística para Entregadores</span>
+          </div>
+
+          <h1 className="text-7xl md:text-9xl font-black tracking-tighter uppercase font-display leading-[0.85] mb-8">
+            Domine seu <br />
+            <span className="text-primary brand-glow">Lucro</span>
+          </h1>
+
+          <p className="text-xl md:text-2xl text-neutral-400 font-medium max-w-2xl mx-auto mb-12 leading-relaxed">
+            A plataforma definitiva para entregadores <span className="text-white font-bold">Shopee</span>, <span className="text-white font-bold">Mercado Livre</span> e <span className="text-white font-bold">Autônomos</span>. 
+            Controle rotas, calcule fretes e maximize seus ganhos.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Link 
+              href={ROUTES.LOGIN}
+              className="group w-full sm:w-auto bg-white text-black px-12 py-6 rounded-[24px] font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all shadow-2xl shadow-white/10 flex items-center justify-center gap-3 active:scale-95"
+            >
+              Começar Agora
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link 
+              href="#features"
+              className="w-full sm:w-auto px-12 py-6 rounded-[24px] border border-white/10 font-black uppercase tracking-widest hover:bg-white/5 transition-all active:scale-95"
+            >
+              Saiba Mais
+            </Link>
+          </div>
+        </div>
+
+        {/* Floating Stats Preview */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden lg:flex gap-12 text-[10px] font-black uppercase tracking-[0.3em] text-neutral-500">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 roxou-gradient rounded-2xl flex items-center justify-center shadow-2xl roxou-glow">
-              <ShieldCheck className="w-7 h-7 text-white" />
-            </div>
-            <span className="text-2xl font-black tracking-tighter uppercase font-display">Roxou<span className="text-roxou">.</span></span>
+            <Package className="w-4 h-4 text-primary" />
+            <span>+1M Pacotes Gerenciados</span>
           </div>
-          <div className="flex items-center gap-8">
-            <Link 
-              href={ROUTES.LOGIN}
-              className="text-xs font-black uppercase tracking-widest text-neutral-400 hover:text-white transition-all"
-            >
-              Entrar
-            </Link>
-            <Link 
-              href={ROUTES.LOGIN}
-              className="hidden sm:block text-xs font-black uppercase tracking-widest px-6 py-3 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-all"
-            >
-              Criar Conta
-            </Link>
+          <div className="flex items-center gap-3">
+            <MapPin className="w-4 h-4 text-primary" />
+            <span>+500k KM Otimizados</span>
           </div>
-        </header>
+          <div className="flex items-center gap-3">
+            <TrendingUp className="w-4 h-4 text-primary" />
+            <span>+25% Lucro Médio</span>
+          </div>
+        </div>
+      </section>
 
-        {/* Hero Section */}
-        <div className="pt-16 pb-32 grid lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-7 space-y-10">
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-roxou/10 border border-roxou/20 text-roxou-light text-[10px] font-black uppercase tracking-[0.2em]">
-              <span className="w-2 h-2 bg-roxou rounded-full animate-pulse" />
-              Urban Nightlife Transportation
-            </div>
-            
-            <h1 className="text-[12vw] lg:text-[110px] font-black leading-[0.85] tracking-tighter font-display uppercase">
-              Sua Noite <br />
-              <span className="text-roxou">Começa</span> <br />
-              Aqui.
-            </h1>
-            
-            <p className="text-xl text-neutral-400 max-w-lg leading-relaxed font-medium">
-              Conexão premium para quem não aceita menos que o extraordinário. Chegue aos melhores eventos com estilo e segurança.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 pt-6">
-              <Link 
-                href={ROUTES.LOGIN}
-                className="group roxou-gradient text-white px-10 py-6 rounded-[24px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl roxou-glow flex items-center justify-center gap-3"
-              >
-                Solicitar Viagem
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link 
-                href={ROUTES.DRIVER_DASHBOARD}
-                className="bg-white/5 border border-white/10 text-white px-10 py-6 rounded-[24px] font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-3"
-              >
-                Ser Motorista
-              </Link>
-            </div>
+      {/* Features Grid */}
+      <section id="features" className="py-32 px-6 bg-white/[0.02]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <h2 className="text-5xl font-black tracking-tighter uppercase mb-6">Feito para quem <span className="text-primary">roda</span></h2>
+            <p className="text-neutral-500 font-medium max-w-xl mx-auto">Ferramentas profissionais para transformar sua moto ou carro em uma máquina de lucro.</p>
           </div>
 
-          {/* Visual Element - Bento Style */}
-          <div className="lg:col-span-5 relative">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="col-span-2 aspect-[16/10] rounded-[40px] overflow-hidden border border-white/10 relative group">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="glass p-5 rounded-3xl flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 roxou-gradient rounded-xl flex items-center justify-center">
-                        <Car className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-[9px] font-black text-neutral-400 uppercase tracking-widest">Próximo de você</p>
-                        <p className="text-sm font-black uppercase">Audi A4 • Black</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-black text-roxou">3 MIN</span>
-                  </div>
-                </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="glass-card p-10 space-y-6 group hover:border-primary/30 transition-all">
+              <div className="p-4 rounded-2xl bg-primary/10 text-primary w-fit group-hover:scale-110 transition-transform">
+                <BarChart3 className="w-8 h-8" />
               </div>
-              <div className="aspect-square rounded-[40px] glass flex flex-col items-center justify-center text-center p-6">
-                <Users className="w-8 h-8 text-roxou mb-3" />
-                <p className="text-2xl font-black tracking-tighter">2.4k+</p>
-                <p className="text-[9px] font-black text-neutral-500 uppercase tracking-widest">Usuários Ativos</p>
+              <h3 className="text-2xl font-black tracking-tight uppercase">Dashboard Inteligente</h3>
+              <p className="text-neutral-500 font-medium leading-relaxed">Visualize seus ganhos por KM, por hora e por plataforma em tempo real. Tome decisões baseadas em dados.</p>
+            </div>
+
+            <div className="glass-card p-10 space-y-6 group hover:border-primary/30 transition-all">
+              <div className="p-4 rounded-2xl bg-primary/10 text-primary w-fit group-hover:scale-110 transition-transform">
+                <Calculator className="w-8 h-8" />
               </div>
-              <div className="aspect-square rounded-[40px] roxou-gradient flex flex-col items-center justify-center text-center p-6 shadow-2xl roxou-glow">
-                <ShieldCheck className="w-8 h-8 text-white mb-3" />
-                <p className="text-2xl font-black tracking-tighter">100%</p>
-                <p className="text-[9px] font-black text-white/60 uppercase tracking-widest">Verificado</p>
+              <h3 className="text-2xl font-black tracking-tight uppercase">Calculadora de Frete</h3>
+              <p className="text-neutral-500 font-medium leading-relaxed">Nunca mais tome prejuízo. Calcule o valor exato que deve cobrar considerando combustível, desgaste e lucro.</p>
+            </div>
+
+            <div className="glass-card p-10 space-y-6 group hover:border-primary/30 transition-all">
+              <div className="p-4 rounded-2xl bg-primary/10 text-primary w-fit group-hover:scale-110 transition-transform">
+                <Smartphone className="w-8 h-8" />
               </div>
+              <h3 className="text-2xl font-black tracking-tight uppercase">Mobile First</h3>
+              <p className="text-neutral-500 font-medium leading-relaxed">Desenvolvido para ser usado na rua. Interface rápida, botões grandes e leitura clara sob a luz do sol.</p>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8 pb-32">
-          {[
-            {
-              icon: ShieldCheck,
-              title: "Segurança VIP",
-              desc: "Protocolos rigorosos de verificação para sua total tranquilidade na noite."
-            },
-            {
-              icon: Car,
-              title: "Frota Curada",
-              desc: "Apenas veículos que atendem ao nosso padrão de excelência e conforto."
-            },
-            {
-              icon: Users,
-              title: "Comunidade",
-              desc: "Conectando pessoas que frequentam os melhores lugares da cidade."
-            }
-          ].map((feature, i) => (
-            <div key={i} className="glass-card p-10 group hover:border-roxou/30 transition-all">
-              <div className="w-14 h-14 bg-roxou/10 rounded-2xl flex items-center justify-center text-roxou mb-8 group-hover:scale-110 transition-transform">
-                <feature.icon className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{feature.title}</h3>
-              <p className="text-neutral-400 leading-relaxed font-medium">{feature.desc}</p>
-            </div>
-          ))}
+      {/* Footer */}
+      <footer className="py-20 px-6 border-t border-white/5">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg" />
+            <span className="text-xl font-black tracking-tighter uppercase">Rota<span className="text-primary">Lucro</span></span>
+          </div>
+          <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest text-neutral-500">
+            <Link href="/terms" className="hover:text-white transition-colors">Termos</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacidade</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contato</Link>
+          </div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-neutral-700">© 2026 RotaLucro. Todos os direitos reservados.</p>
         </div>
-      </div>
+      </footer>
     </main>
   );
 }

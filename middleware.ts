@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { updateSession } from './src/lib/supabase-middleware';
-import { ROUTES, ROLES, DRIVER_STATUS } from './src/constants';
+import { ROUTES, ROLES } from './src/constants';
 
 /**
  * ROXOU TRANSPORTE - AUTH MIDDLEWARE
@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
     // Fetch profile for role and legal guard
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role, accepted_terms_at, is_blocked')
+      .select('role, is_blocked')
       .eq('id', user.id)
       .single();
 
@@ -55,14 +55,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url);
     }
 
-    // 2. LEGAL GUARD
-    // If user hasn't accepted terms and is trying to access protected operational areas
-    const isOperationalArea = path.startsWith('/dashboard') || path.startsWith('/driver') || path.startsWith('/chat');
-    if (!profile.accepted_terms_at && isOperationalArea && path !== '/terms-acceptance') {
-      url.pathname = '/terms-acceptance';
-      return NextResponse.redirect(url);
-    }
-
     // 3. RBAC & REDIRECTS
     
     // Admin Isolation
@@ -71,39 +63,10 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url);
     }
 
-    // Driver Area Protection
-    if (path.startsWith('/driver')) {
-      if (profile.role !== ROLES.DRIVER) {
-        url.pathname = ROUTES.PASSENGER_DASHBOARD;
-        return NextResponse.redirect(url);
-      }
-
-      // 4. DRIVER VERIFICATION GUARD
-      // We already have the profile from the previous query
-      const { data: driverProfile } = await supabase
-        .from('profiles')
-        .select('driver_status')
-        .eq('id', user.id)
-        .single();
-
-      // Block operational areas if not approved
-      const isDriverOperational = path.startsWith('/driver/availability') || path.startsWith('/driver/leads');
-      if (isDriverOperational && driverProfile?.driver_status !== DRIVER_STATUS.APPROVED) {
-        url.pathname = '/driver/onboarding'; // Redirect to onboarding/status page
-        return NextResponse.redirect(url);
-      }
-    }
-
-    // Passenger Area Protection
-    if (path.startsWith('/dashboard') && profile.role !== ROLES.PASSENGER) {
-      if (profile.role === ROLES.DRIVER) {
-        url.pathname = ROUTES.DRIVER_DASHBOARD;
-        return NextResponse.redirect(url);
-      }
-      if (profile.role === ROLES.ADMIN) {
-        url.pathname = ROUTES.ADMIN_DASHBOARD;
-        return NextResponse.redirect(url);
-      }
+    // Unified Dashboard Redirect for Root
+    if (path === ROUTES.HOME) {
+      url.pathname = ROUTES.DASHBOARD;
+      return NextResponse.redirect(url);
     }
   }
 

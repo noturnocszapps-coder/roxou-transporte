@@ -41,13 +41,21 @@ export const MODERATION_ACTIONS = {
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
-  TERMS_ACCEPTANCE: '/terms-acceptance',
-  PASSENGER_DASHBOARD: '/dashboard',
-  DRIVER_DASHBOARD: '/driver/dashboard',
-  DRIVER_ONBOARDING: '/driver/onboarding',
+  DASHBOARD: '/dashboard',
+  RECORDS: '/records',
+  FREIGHT: '/freight',
+  SIMULATOR: '/simulator',
+  REPORTS: '/reports',
+  EXPENSES: '/expenses',
+  FUEL: '/fuel',
   ADMIN_DASHBOARD: '/admin/dashboard',
-  ADMIN_REPORTS: '/admin/reports',
-  CHAT: (id: string) => `/chat/${id}`,
+  TERMS: '/terms',
+  // Compatibility Aliases
+  PASSENGER_DASHBOARD: '/dashboard',
+  DRIVER_DASHBOARD: '/dashboard',
+  DRIVER_ONBOARDING: '/dashboard',
+  REQUEST_NEW: '/records/new',
+  CHAT: (id: string) => `/dashboard`,
 } as const;
 
 export const LEGAL_VERSION = '1.0.0';

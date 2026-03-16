@@ -1,5 +1,5 @@
 {
-  "name": "roxou-transporte",
-  "description": "Connection platform for event transportation in Presidente Prudente. Peer-to-peer communication layer.",
+  "name": "RotaLucro",
+  "description": "Smart control center for Shopee, Mercado Livre, and autonomous delivery workers. Manage routes, freight, and earnings with intelligence.",
   "requestFramePermissions": ["geolocation"]
 }
