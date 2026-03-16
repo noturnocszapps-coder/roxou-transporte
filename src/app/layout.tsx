@@ -15,8 +15,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "RotaLucro - Inteligência Logística",
-  description: "A plataforma definitiva para entregadores Shopee, Mercado Livre e Autônomos.",
+  title: "RotaLucro - Inteligência Logística para Entregadores",
+  description: "A plataforma definitiva para entregadores Shopee, Mercado Livre e Autônomos. Saiba exatamente quanto você lucra por entrega.",
 };
 
 export default function RootLayout({
