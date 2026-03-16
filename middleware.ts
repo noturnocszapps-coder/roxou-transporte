@@ -40,10 +40,10 @@ export async function middleware(request: NextRequest) {
   }
 
   if (user) {
-    // Fetch profile for role and legal guard
+    // Fetch profile for role, legal guard, and onboarding
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role, is_blocked')
+      .select('role, is_blocked, onboarding_completed, full_name, phone')
       .eq('id', user.id)
       .single();
 
@@ -52,6 +52,27 @@ export async function middleware(request: NextRequest) {
     // 1.5 BLOCKED USER GUARD
     if (profile.is_blocked && path !== '/blocked') {
       url.pathname = '/blocked';
+      return NextResponse.redirect(url);
+    }
+
+    // 2. ONBOARDING GUARD
+    // If onboarding not completed, redirect to onboarding page
+    // Unless they are already on onboarding or auth callback or public routes
+    const isAuthRoute = path.startsWith('/auth');
+    const isOnboardingRoute = path === ROUTES.ONBOARDING;
+    
+    // Infer onboarding as completed if they have name and phone (backward compatibility)
+    const hasBasicInfo = profile.full_name && profile.phone;
+    const isCompleted = profile.onboarding_completed || hasBasicInfo;
+
+    if (!isCompleted && !isOnboardingRoute && !isAuthRoute && !isPublicRoute && path !== '/blocked') {
+      url.pathname = ROUTES.ONBOARDING;
+      return NextResponse.redirect(url);
+    }
+
+    // If completed and trying to access onboarding, redirect to dashboard
+    if (isCompleted && isOnboardingRoute) {
+      url.pathname = ROUTES.DASHBOARD;
       return NextResponse.redirect(url);
     }
 

@@ -11,9 +11,15 @@ export default async function DashboardPage() {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('full_name')
+    .select('full_name, phone, onboarding_completed')
     .eq('id', user.id)
     .single();
+
+  const isCompleted = profile?.onboarding_completed || (profile?.full_name && profile?.phone);
+
+  if (!isCompleted) {
+    redirect(ROUTES.ONBOARDING);
+  }
 
   return (
     <main className="min-h-screen bg-bg py-12 px-6 relative overflow-hidden selection:bg-primary/30">

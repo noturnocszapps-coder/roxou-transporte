@@ -41,6 +41,7 @@ export const MODERATION_ACTIONS = {
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
+  ONBOARDING: '/onboarding',
   DASHBOARD: '/dashboard',
   RECORDS: '/records',
   FREIGHT: '/freight',

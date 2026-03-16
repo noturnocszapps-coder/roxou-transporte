@@ -11,6 +11,21 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Check onboarding status for better redirect
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('onboarding_completed, full_name, phone')
+          .eq('id', user.id)
+          .single();
+        
+        const isCompleted = profile?.onboarding_completed || (profile?.full_name && profile?.phone);
+        
+        if (!isCompleted) {
+          return NextResponse.redirect(`${baseUrl}/onboarding`);
+        }
+      }
       return NextResponse.redirect(`${baseUrl}${next}`);
     }
   }
